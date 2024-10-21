@@ -1,0 +1,18 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.8-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the server code
+COPY server.py .
+
+# Expose the signaling port
+EXPOSE 1234
+
+# Command to run the server
+CMD ["python3", "server.py", "offer", "--signaling", "tcp-socket", "--signaling-host", "0.0.0.0", "--signaling-port", "1234"]
